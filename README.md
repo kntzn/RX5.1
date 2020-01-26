@@ -2,17 +2,16 @@
 Firmware for the esk8 rx unit HW5.1.x
 
 # Features
-<h2>Communication</h2>
+## Communication
 
 - COBS-package-based communication
 - Request-based data transmission to the remote
 - Rawinput mode
 - Failsafe
 
-<h2>Motor controller</h2>
+## Motor controller
 
 - Multiple ride modes
-
   - Hybrid (speed based)
   - Eco
   - Cruise 
@@ -21,7 +20,7 @@ Firmware for the esk8 rx unit HW5.1.x
 - Automatic mode switch according to the battery state (10%/25%/25%/25%)
 - Cruise control
 
-<h2>Ride controller</h2>
+## Ride controller
 
 - Speedometer
 - Odometer
@@ -29,28 +28,32 @@ Firmware for the esk8 rx unit HW5.1.x
 - "Continue last trip" feature
 - Average speed
 - Left disance approximation
-- Benchmark mode
+- Benchmark mode (Saves realtime data to the array and saves it to file)
 
-<h2>BMS</h2>
+## BMS
 
 - Battery volatge
-- Battery percents
-- Battery consumption
+- Battery percents calc.
+- Battery capacity left/consumed 
 
-<h2>Light controller</h2>
+## Light controller
 
-- 3 front lights modes (High/dipped beam, Blink mode)
-- 3 rear lights modes (Blink+Full brightness, Half+Full brightness, Full brightness)
+- 3 front lights modes 
+  - High   beam
+  - Dipped beam
+  - Blink  mode
+- 3 rear lights modes 
+  - Blink + Full brightness
+  - Half  + Full brightness
+  - Full         brightness)
 - Underlights
 - Automatic light switch acording to enviroment brightness
 
-<h2>Logging</h2>
+## Logging
 
-- Logging to SD card of the speed
-- Trip
-- Mode
-- Battery voltage
-
-<h2>GPIO</h2>
-
-- 2 analog IO
+- Logging to SD card of the
+  - Speed
+  - Trip
+  - Mode
+  - Battery voltage
+- Benchmark log files
