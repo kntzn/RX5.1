@@ -30,7 +30,7 @@ Firmware for the esk8 rx unit HW5.1.x
   
 - Failsafe
   - 1-3s ramp-down time to -100% throttle
-- Automatic mode switch according to the battery state (10%/25%/25%/25%)
+- Automatic mode switch according to the battery state (5%/15%/25%/25%)
 - Cruise control
 
 ## Ride controller
@@ -43,7 +43,7 @@ Firmware for the esk8 rx unit HW5.1.x
 - Trip controller
   - Average speed
   - Left disance approximation
-- Benchmark mode (Saves realtime data to the array and saves it to file) (2)
+- Benchmark mode (Saves realtime data to the array and then saves it to file)
   - Speed
   - Acceleration
   - Battery voltage
@@ -65,7 +65,8 @@ Firmware for the esk8 rx unit HW5.1.x
   - Rear+front
   - Auto 
     - Automatic light switch acording  to enviroment brightness
-
+    - Dependency of mode from light uses hysteresis
+    - Updates every minute
 - 3 front lights modes
   - Off             (day           mode)
   - Half brightness (dawn and dusk mode)
@@ -79,6 +80,8 @@ Firmware for the esk8 rx unit HW5.1.x
   | Night     |         Blink        |         Full        |
   
 - Underlights
+
+- Fade in at startup
 
 ## Logging
 
