@@ -57,8 +57,6 @@ size_t Communication::receivePacket (uint8_t * pack)
 
         }
 
-
-
     return cobsDecodedPackLen;
     }
 
@@ -72,32 +70,38 @@ void Communication::flush ()
     inputBuf.clear ();
     }
 
-Communication::Communication ():
-    rawinput (false)
+Communication::Communication(uint8_t ch) :
+	rawinput(false),
+	changeChannel(false),
+	channel(ch % 100)
     {
+	// TODO: switch channel via AT+Cxxx and SET pin
     }
 
 void Communication::sendCommand (command cmd, uint16_t arg)
     {
-    buffer [0] = static_cast <char> (cmd);
-    buffer [1] = arg / 256;
-    buffer [2] = arg % 256;
+	buffer [0] = channel;
+    buffer [1] = static_cast <char> (cmd);
+    buffer [2] = arg / 256;
+    buffer [3] = arg % 256;
 
     sendPacket (buffer, PACK_SIZE_DEFAULT);
     }
 
 void Communication::sendRequest (command req)
     {
-    buffer [0] = static_cast <char> (req);
+	buffer [0] = channel;
+    buffer [1] = static_cast <char> (req);
     
     sendPacket (buffer, PACK_SIZE_DEFAULT);
     }
 
 void Communication::sendResponse (response resp, uint16_t val)
     {
-    buffer [0] = static_cast <char> (resp);
-    buffer [1] = val / 256;
-    buffer [2] = val % 256;
+	buffer [0] = channel;
+    buffer [1] = static_cast <char> (resp);
+    buffer [2] = val / 256;
+    buffer [3] = val % 256;
 
     for (int i = 0; i < RESPONSE_PACKETS; i++)
         sendPacket (buffer, PACK_SIZE_DEFAULT);
@@ -108,7 +112,10 @@ Communication::command Communication::receiveRequest ()
     // If new packet's size is correct
     if (receivePacket (buffer) == PACK_SIZE_DEFAULT)
         { 
-        return static_cast <command> (buffer [0]);
+		if (buffer[0] == channel)
+			return static_cast <command> (buffer[1]);
+		else
+			changeChannel = true;
         }
     return command::nocmd;
     }
@@ -118,7 +125,10 @@ Communication::response Communication::receiveResponse ()
     // If new packet's size is correct
     if (receivePacket (buffer) == PACK_SIZE_DEFAULT)
         {
-        return static_cast <response> (buffer [0]);
+		if (buffer[0] == channel)
+			return static_cast <response> (buffer [1]);
+		else
+			changeChannel = true;
         }
     return response::noresp;
     }
@@ -130,5 +140,5 @@ bool Communication::rawinputActive ()
 
 uint8_t * Communication::argbuf ()
     {
-    return (buffer + 1);
+    return (buffer + 2);
     }

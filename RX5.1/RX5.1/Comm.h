@@ -20,7 +20,7 @@
 #include <assert.h>
 
 #define PACK_SIZE_MAX 64
-#define PACK_SIZE_DEFAULT 3
+#define PACK_SIZE_DEFAULT 4
 #define EOP 0x00
 
 #define REQUEST_PERIOD 500
@@ -34,30 +34,31 @@ class Communication
         sarray <uint8_t, PACK_SIZE_MAX + 1> inputBuf;
         uint8_t buffer [PACK_SIZE_MAX];
         
-        bool rawinput;
+        bool rawinput, changeChannel;
+		uint8_t channel;
 
     public:
         enum class command
             {
-            nocmd        =  0 ,
-            throttle     = 'T',
-            voltage      = 'V',
-            mode         = 'M',
-            speed        = 'S',
+            //nocmd        =  0 ,
+            //throttle     = 'T',
+            //voltage      = 'V',
+            //mode         = 'M',
+            //speed        = 'S',
 
 
-            raw          = 'R',
-            raw_safety   = 'RR'
+            /*raw          = 'R',
+            raw_safety   = 'RR'*/
             };
         
         enum class response
             {
-            noresp       =  0,
-            voltage      = 'v',
-            speed        = 's'
+            //noresp       =  0,
+            //voltage      = 'v',
+            //speed        = 's'
             };
 
-        Communication ();        
+        Communication (uint8_t ch);
 
         void sendCommand (command cmd, uint16_t arg = 0);
         void sendRequest (command req);
