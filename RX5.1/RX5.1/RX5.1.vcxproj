@@ -112,19 +112,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Battery.h" />
-    <ClInclude Include="cobs.h" />
-    <ClInclude Include="Comm.h" />
     <ClInclude Include="Config.h" />
-    <ClInclude Include="HallSensor.h" />
     <ClInclude Include="Pinout.h" />
-    <ClInclude Include="Sarray.h" />
-    <ClInclude Include="SysConfig.h" />
     <ClInclude Include="__vm\.RX5.1.vsarduino.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Battery.cpp" />
-    <ClCompile Include="Comm.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

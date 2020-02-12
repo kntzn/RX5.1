@@ -35,30 +35,31 @@ class Communication
         uint8_t buffer [PACK_SIZE_MAX];
         
         bool rawinput, changeChannel;
-		uint8_t channel;
+		uint8_t channel, set_pin;
 
     public:
         enum class command
             {
-            //nocmd        =  0 ,
-            //throttle     = 'T',
-            //voltage      = 'V',
-            //mode         = 'M',
-            //speed        = 'S',
+            nocmd        =  0 ,
+            throttle     = 'T',
+            battery      = 'B',
+            mode         = 'M',
+            trip         = 'R',
 
-
-            /*raw          = 'R',
-            raw_safety   = 'RR'*/
+            raw          = 'R',
+            raw_safety   = 'RR'
             };
         
         enum class response
             {
-            //noresp       =  0,
-            //voltage      = 'v',
-            //speed        = 's'
+            noresp       =  0,
+            battery      = 'b',
+            trip         = 't'
             };
 
-        Communication (uint8_t ch);
+        Communication (uint8_t ch, uint8_t setPinId);
+		
+		void changeCh(uint8_t ch);
 
         void sendCommand (command cmd, uint16_t arg = 0);
         void sendRequest (command req);
@@ -73,7 +74,6 @@ class Communication
 
         void activateRawinput ();
         void flush ();
-
 
         bool rawinputActive ();
         // Returns ptr to the args. array

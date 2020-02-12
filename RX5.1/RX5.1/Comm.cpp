@@ -70,13 +70,46 @@ void Communication::flush ()
     inputBuf.clear ();
     }
 
-Communication::Communication(uint8_t ch) :
+Communication::Communication(uint8_t ch, uint8_t setPinId) :
 	rawinput(false),
 	changeChannel(false),
-	channel(ch % 100)
+	set_pin (setPinId)
     {
-	// TODO: switch channel via AT+Cxxx and SET pin
+	changeCh(ch);
     }
+
+void Communication::changeCh(uint8_t ch)
+	{
+	// Updates comm. class state
+	channel = ch;
+	changeChannel = false;
+
+	// Sets HC12 to cfg mode
+	digitalWrite(set_pin, LOW);
+	delay(40);
+	
+	// Creates change channel command string in
+	// format AT+Cxxx
+	String cmd_str = "AT+C";
+	if (ch == 100)
+		cmd_str += ch;
+	else if (ch >= 10)
+		{
+		cmd_str += '0';
+		cmd_str += ch;
+		}
+	else
+		{
+		cmd_str += "00";
+		cmd_str += ch;
+		}
+	
+	// Sends command
+	Serial.println(cmd_str.c_str());
+
+	// Unsets HC12 from set cmd mode
+	digitalWrite(set_pin, HIGH);
+	}
 
 void Communication::sendCommand (command cmd, uint16_t arg)
     {
