@@ -27,5 +27,16 @@
     <ClInclude Include="Pinout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Communication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cobs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Communication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
