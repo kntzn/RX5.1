@@ -116,6 +116,7 @@
     <ClInclude Include="Communication.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Pinout.h" />
+    <ClInclude Include="Sarray.h" />
     <ClInclude Include="__vm\.RX5.1.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
