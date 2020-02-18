@@ -5,9 +5,11 @@
 #include "Communication.h"
 #include <stdint.h>
 #include <stddef.h>
+#include <string.h>
 
 #define StartBlock()	(code_ptr = dst++, code = 1)
 #define FinishBlock()	(*code_ptr = code)
+
 
 void Communication::sendPacket(uint8_t* pack, size_t len)
 	{
@@ -73,5 +75,35 @@ Communication::Communication(uint8_t set_pin, uint8_t channel) :
 	channelId(channel)
 	{
 	pinMode(set_pin, OUTPUT);
+	changeCh(channel);
 	digitalWrite(set_pin, HIGH);
+	
+	}
+
+void Communication::changeCh(uint8_t ch)
+	{
+	// turns AT mode on
+	digitalWrite(setPin, LOW);
+	delay(AT_MODE_ON_DELAY);
+	
+	String cmdStr = "AT+C";
+	uint8_t channel = ch%N_CHANNELS;
+
+	// Adds "xxx" part to the "AT+C" string
+	if (channel < 10)
+		{
+		cmdStr += "00";
+		cmdStr += String(channel);
+		Serial.println(cmdStr.c_str());
+		}
+	else if(channel < 100)
+		{
+		cmdStr += "0";
+		cmdStr += String(channel);
+		Serial.println(cmdStr.c_str());
+		}
+
+	// turns AT mode off
+	digitalWrite(setPin, HIGH);
+	delay(AT_MODE_OFF_DELAY);
 	}
