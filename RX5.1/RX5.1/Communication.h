@@ -4,9 +4,9 @@
 #define _COMMUNICATION_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
+#include "arduino.h"
 #else
-	#include "WProgram.h"
+#include "WProgram.h"
 #endif
 
 #include "cobs.h"
@@ -26,58 +26,58 @@
 #define RESPONSE_PACKETS 5
 
 class Communication
-{
- protected:
+    {
+    protected:
 
-	 enum class command
-		 {
-		 nocmd    =  0,  // no                            cmd avail
-		 rawinput = 'R', // reserved                      cmd
-		 changeCh = 'C', // change channel                cmd
-		 motor    = 'M', // change throttle, mode, cruise cmd
-		 lights   = 'L', // change Llghts state           cmd
-		 contTrip = 'N', // Start new / continue trip     cmd
-		 trip     = 'T', // trip controller state         request
-		 battery  = 'B'  // battery         state         request
-		 };
+        enum class command
+            {
+            nocmd = 0,  // no                            cmd avail
+            rawinput = 'R', // reserved                      cmd
+            changeCh = 'C', // change channel                cmd
+            motor = 'M', // change throttle, mode, cruise cmd
+            lights = 'L', // change Llghts state           cmd
+            contTrip = 'N', // Start new / continue trip     cmd
+            trip = 'T', // trip controller state         request
+            battery = 'B'  // battery         state         request
+            };
 
-	 enum class response
-		 {
-		 noresp   = 0,   // no              response avail
-		 trip     = 't', // trip controller response
-		 battery  = 'b', // bms             response
-		 };
+        enum class response
+            {
+            noresp = 0,   // no              response avail
+            trip = 't', // trip controller response
+            battery = 'b', // bms             response
+            };
 
-	 sarray <uint8_t, PACK_SIZE_MAX + 1> inputBuf;
-	 uint8_t buffer [PACK_SIZE_MAX];
+        sarray <uint8_t, PACK_SIZE_MAX + 1> inputBuf;
+        uint8_t buffer [PACK_SIZE_MAX];
 
-	 uint8_t channelId, setPin;
+        uint8_t channelId, setPin;
 
-	 void sendPacket(uint8_t* pack, size_t len); // Protected function to write packet
-	 size_t receivePacket(uint8_t* pack);        // Protected function to read  packet
+        void sendPacket (uint8_t* pack, size_t len); // Protected function to write packet
+        size_t receivePacket (uint8_t* pack);        // Protected function to read  packet
 
- public:
-	 Communication(uint8_t set_pin, uint8_t channel);
+    public:
+        Communication (uint8_t set_pin, uint8_t channel);
 
-	 void changeCh(uint8_t ch);
+        void changeCh (uint8_t ch);
 
-	 // TODO:
+        // TODO:
 
-	 //void sendCommand(command cmd, uint16_t arg = 0);
-	 //void sendRequest(command req);
-	 //void sendResponse(response resp, uint16_t val = 0);
+        //void sendCommand(command cmd, uint16_t arg = 0);
+        //void sendRequest(command req);
+        //void sendResponse(response resp, uint16_t val = 0);
 
-	 //command receiveRequest();
-	 //response receiveResponse();
+        //command receiveRequest();
+        //response receiveResponse();
 
-	 //void activateRawinput();
-	 //void flush();
+        //void activateRawinput();
+        //void flush();
 
-	 //bool rawinputActive();
-	 // Returns ptr to the args. array
-	 //uint8_t *argbuf();
+        //bool rawinputActive();
+        // Returns ptr to the args. array
+        //uint8_t *argbuf();
 
-};
+    };
 
 #endif
 

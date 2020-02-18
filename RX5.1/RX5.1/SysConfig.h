@@ -6,16 +6,17 @@
 
 // HW cfg:
 #define WHEEL_DIA 0.083
+#define BAT_WH 222
 
 // Modes cfg:
 enum class mode
-	{
-	lock,
-	hybrid,
-	eco,
-	cruise,
-	sport
-	};
+    {
+    lock,
+    hybrid,
+    eco,
+    cruise,
+    sport
+    };
 
 // ECO
 #define BRAKE_MAX_ECO 0.25
