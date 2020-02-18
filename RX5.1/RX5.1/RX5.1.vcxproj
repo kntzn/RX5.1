@@ -112,14 +112,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BMS.h" />
     <ClInclude Include="cobs.h" />
     <ClInclude Include="Communication.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Pinout.h" />
     <ClInclude Include="Sarray.h" />
+    <ClInclude Include="SysConfig.h" />
+    <ClInclude Include="VoltageCurve.h" />
     <ClInclude Include="__vm\.RX5.1.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BMS.cpp" />
     <ClCompile Include="Communication.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

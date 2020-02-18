@@ -77,7 +77,6 @@ Communication::Communication(uint8_t set_pin, uint8_t channel) :
 	pinMode(set_pin, OUTPUT);
 	changeCh(channel);
 	digitalWrite(set_pin, HIGH);
-	
 	}
 
 void Communication::changeCh(uint8_t ch)

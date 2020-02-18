@@ -1,23 +1,21 @@
 #pragma once
 #include "Config.h"
 
-enum mode
-    {
-    lock,
-    neutral,
-    eco,
-    normal,
-    sport
-    };
-
-
+// FW cfg:
 #define VESC_DEADBAND 0.15
 
 // HW cfg:
-
 #define WHEEL_DIA 0.083
 
-// Modes config:
+// Modes cfg:
+enum class mode
+	{
+	lock,
+	hybrid,
+	eco,
+	cruise,
+	sport
+	};
 
 // ECO
 #define BRAKE_MAX_ECO 0.25

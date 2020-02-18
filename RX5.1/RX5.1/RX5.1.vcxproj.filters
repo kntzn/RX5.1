@@ -36,9 +36,21 @@
     <ClInclude Include="Sarray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SysConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BMS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VoltageCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Communication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BMS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

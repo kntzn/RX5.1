@@ -16,6 +16,8 @@
 // 	                        |__________________________________|
 //
 
+#include "BMS.h"
+#include "Pinout.h"
 #include "Communication.h"
 
 #define forever for (;;)
@@ -25,6 +27,8 @@ void initialize();
 int main()
 	{
 	initialize();
+	Communication HC12(HC12_SET, 0); // TODO: EEPROM load channel
+	
 
 	forever
 		{
