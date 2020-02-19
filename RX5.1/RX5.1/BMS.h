@@ -13,7 +13,7 @@
 
 class BMS
     {
-    protected:
+    private:
         uint8_t readPin;
         double bat_voltage, percents, whDrawn;
 

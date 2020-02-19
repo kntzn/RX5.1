@@ -14,3 +14,10 @@
 #define BAT_WH           222
 #define R1_DIVIDER       4300
 #define R1_R2_DIVIDER    24300
+
+#define LIGHTS_FADE_IN_TIME 2000
+
+#define NIGHT____TOP_THRESH 543
+#define DUSK__BOTTOM_THRESH 453
+#define DUSK_____TOP_THRESH 555
+#define DAY___BOTTOM_THRESH 666

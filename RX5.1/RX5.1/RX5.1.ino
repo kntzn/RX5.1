@@ -16,11 +16,13 @@
 // 	                        |__________________________________|
 //
 
+#include "kstd.h"
+#include "Lights.h"
 #include "BMS.h"
 #include "Pinout.h"
 #include "Communication.h"
 
-#define forever for (;;)
+
 
 void initialize();
 

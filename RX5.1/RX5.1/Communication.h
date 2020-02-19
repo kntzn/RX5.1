@@ -27,7 +27,7 @@
 
 class Communication
     {
-    protected:
+    private:
 
         enum class command
             {
@@ -53,8 +53,8 @@ class Communication
 
         uint8_t channelId, setPin;
 
-        void sendPacket (uint8_t* pack, size_t len); // Protected function to write packet
-        size_t receivePacket (uint8_t* pack);        // Protected function to read  packet
+        void sendPacket (uint8_t* pack, size_t len); // private function to write packet
+        size_t receivePacket (uint8_t* pack);        // private function to read  packet
 
     public:
         Communication (uint8_t set_pin, uint8_t channel);
