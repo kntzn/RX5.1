@@ -38,15 +38,16 @@ class Lights
         mode lightsMode;
         env_brightness brightness;
 
-        uint8_t fl_pin, rl_pin, ul_pin;
+        uint8_t fl_pin, rl_pin, ul_pin, pr_pin;
 
-
-        //light_type getLightType ()
+        void updateBrightness ();
+        void automaticLightType ();
 
     public:
         Lights (uint8_t front_lights_pin,
                 uint8_t rear_lights_pin,
                 uint8_t under_lights_pin,
+                uint8_t photores_pin,
                 mode lights_mode);
 
         void update (int throttle);
