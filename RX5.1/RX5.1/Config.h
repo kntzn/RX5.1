@@ -11,3 +11,6 @@
 #define REF_VOLTAGE      1.1
 #define VOLTAGE_SMOOTH_K 0.92
 #define N_CELLS          6
+#define BAT_WH           222
+#define R1_DIVIDER       4300
+#define R1_R2_DIVIDER    24300

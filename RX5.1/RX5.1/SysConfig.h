@@ -3,6 +3,12 @@
 
 // FW cfg:
 #define VESC_DEADBAND 0.15
+#define THR_MAX       2000
+#define THR_MID       1500
+#define THR_MIN       1000
+
+#define THR_DELTA_TO_MAX THR_MAX - THR_MID
+#define THR_DELTA_TO_MIN THR_MID - THR_MIN
 
 // HW cfg:
 #define WHEEL_DIA 0.083

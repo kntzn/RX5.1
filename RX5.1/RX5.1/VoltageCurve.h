@@ -1,4 +1,7 @@
-const double curve [58][2] = 
+#pragma once
+
+#define N_CURVE_VALUES 58
+const double curve [N_CURVE_VALUES][2] =
     {
     4.2,                 100.0,
     4.152533333333322,   99.05471912610619,

@@ -21,10 +21,10 @@ class BMS
         long readVcc ();
         // Returns average analog reading
         double aver_analog (uint32_t times = 10U);
+        
         void readVoltage ();
-
-        // getPercentsFromVoltage ();
-        // getUsageFromPercents ();
+        void getPercentsFromVoltage ();
+        void getUsageFromPercents ();
  
     public:
         BMS (uint8_t ADCpin);

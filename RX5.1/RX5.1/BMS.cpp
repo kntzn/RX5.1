@@ -4,6 +4,7 @@
 
 #include "BMS.h"
 #include "Config.h"
+#include "SysConfig.h"
 
 double BMS::aver_analog (uint32_t times)
     {
@@ -44,11 +45,34 @@ void BMS::readVoltage ()
     double new_bat_voltage = (readVcc () * aver_analog () / 1023 / 1000.0);
 
     // Gets voltage per cell according to the divider k
-    new_bat_voltage *= ((24300.0 / 4300.0) / DIVIDER_K) / N_CELLS;
+    new_bat_voltage *= ((R1_R2_DIVIDER / R1_DIVIDER) / DIVIDER_K) / N_CELLS;
 
     // Smootes out voltage value
     bat_voltage = new_bat_voltage * (1.0 - VOLTAGE_SMOOTH_K) + 
                       bat_voltage *        VOLTAGE_SMOOTH_K;
+    }
+
+void BMS::getPercentsFromVoltage ()
+    {
+    uint16_t left = 0, right = N_CURVE_VALUES - 1;
+
+    while (right - left > 1)
+        {
+        uint16_t mid = (left + right) / 2;
+        if (curve [(left + right) / 2] [0] < bat_voltage)
+            right = mid;
+        else
+            left = mid;
+        }
+
+    percents = curve [left] [1] -
+              (curve [left] [1] - curve [right] [1])*(curve [left] [0] - bat_voltage)/
+                                  (curve [left] [0] - curve [right] [0]);
+    }
+
+void BMS::getUsageFromPercents ()
+    {
+    whDrawn = BAT_WH * (1.0 - percents/100.0);
     }
 
 BMS::BMS (uint8_t ADCpin):
@@ -62,9 +86,11 @@ BMS::BMS (uint8_t ADCpin):
 void BMS::update (int throttle)
     {
     // updates the voltage if battery is in the rest state
-    if (!throttle)
+    if (throttle < THR_MID + THR_DELTA_TO_MAX*VESC_DEADBAND &&
+        throttle > THR_MID - THR_DELTA_TO_MIN*VESC_DEADBAND)
+        {
         readVoltage ();
-
-    //percents = getPrecentsFromVoltage ()
-
+        getPercentsFromVoltage ();
+        getUsageFromPercents ();
+        }
     }
