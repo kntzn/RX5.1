@@ -55,29 +55,55 @@ void Lights::automaticLightType ()
         }
     }
 
+void Lights::writeToLeds ()
+    {
+    switch (fl_lt)
+        {
+        case Lights::light_type::full:
+            fl_br = fl_br*(LIGHTS_SMOOTH_K) +BRIGHTNESS_FULL*(1.0 - LIGHTS_SMOOTH_K);
+            break;
+        case Lights::light_type::half:
+            fl_br = fl_br*(LIGHTS_SMOOTH_K) + BRIGHTNESS_HALF*(1.0 - LIGHTS_SMOOTH_K);
+            break;
+        default:
+            fl_br = fl_br*(LIGHTS_SMOOTH_K) +BRIGHTNESS_OFF*(1.0 - LIGHTS_SMOOTH_K);
+            break;
+        }
+
+    switch (rl_lt)
+        {
+        case Lights::light_type::full:
+            rl_br = rl_br*(LIGHTS_SMOOTH_K) +BRIGHTNESS_FULL*(1.0 - LIGHTS_SMOOTH_K);
+            break;
+        case Lights::light_type::half:
+            rl_br = rl_br*(LIGHTS_SMOOTH_K) +BRIGHTNESS_HALF*(1.0 - LIGHTS_SMOOTH_K);
+            break;
+        case Lights::light_type::blink:
+            rl_br = (millis ()%LIGHTS_BLINK_PERIOD > LIGHTS_BLINK_PERIOD/2) *
+                    (BRIGHTNESS_FULL - BRIGHTNESS_OFF) +
+                     BRIGHTNESS_OFF;
+            break;
+        default:
+            rl_br = rl_br*(LIGHTS_SMOOTH_K) +BRIGHTNESS_OFF*(1.0 - LIGHTS_SMOOTH_K);
+            break;
+        }
+    }
+
 Lights::Lights (uint8_t front_lights_pin,
                 uint8_t rear_lights_pin,
                 uint8_t under_lights_pin,
                 uint8_t photores_pin,
-                mode lights_mode):
-    fl_pin (front_lights_pin),
-    rl_pin (rear_lights_pin),
-    ul_pin (under_lights_pin),
-    pr_pin (photores_pin),
-    lightsMode (lights_mode)
+                mode lights_mode,
+                bool under_ligths):
+    fl_pin (front_lights_pin), rl_pin (rear_lights_pin),
+    ul_pin (under_lights_pin), pr_pin (photores_pin),
+    lightsMode (lights_mode), fl_br (0), rl_br (0), ul (under_ligths)
     {
     pinMode (front_lights_pin, OUTPUT);
     pinMode ( rear_lights_pin, OUTPUT);
     pinMode (under_lights_pin, OUTPUT);
 
-    // TODO: FADE_IN at startup
-    /*TIMER_SET (___timer0);
-
-    while (TIMER_GET (___timer0) < LIGHTS_FADE_IN_TIME)
-        {
-        
-        }
-*/
+    update (THR_MID);
     }
 
 void Lights::update (int throttle)
@@ -101,14 +127,25 @@ void Lights::update (int throttle)
             rl_lt = light_type::half;
             break;
         case Lights::mode::_auto:
-
+            automaticLightType ();
             break;
         default:
             break;
         }
      
-
+    // Changes output to leds
+    writeToLeds ();
     // Stop signal
     if (throttle < THR_MID - THR_DELTA_TO_MIN*VESC_DEADBAND)
-        rl_lt = light_type::full;
+        rl_br = BRIGHTNESS_FULL;
+    }
+
+void Lights::setMode (mode new_mode)
+    {
+    lightsMode = new_mode;
+    }
+
+void Lights::setUnderLights (bool on)
+    {
+    ul = on;
     }

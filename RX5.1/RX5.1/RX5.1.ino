@@ -30,7 +30,9 @@ int main()
 	{
 	initialize();
 	Communication HC12(HC12_SET, 0); // TODO: EEPROM load channel
-	
+    BMS battery (V_BAT);
+    Lights lights (LIGHTS_FRONT, LIGHTS_BACK,
+                   LIGHTS_UNDER, LIGHTS_SENS, Lights::mode::_off);
 
 	forever
 		{

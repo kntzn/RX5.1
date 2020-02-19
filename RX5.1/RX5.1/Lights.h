@@ -34,6 +34,10 @@ class Lights
             night
             };
         
+
+        double     fl_br, rl_br;
+        bool ul;
+
         light_type fl_lt, rl_lt;
         mode lightsMode;
         env_brightness brightness;
@@ -42,17 +46,20 @@ class Lights
 
         void updateBrightness ();
         void automaticLightType ();
+        void writeToLeds ();
 
     public:
         Lights (uint8_t front_lights_pin,
                 uint8_t rear_lights_pin,
                 uint8_t under_lights_pin,
                 uint8_t photores_pin,
-                mode lights_mode);
+                mode lights_mode,
+                bool under_ligths = false);
 
         void update (int throttle);
         
         void setMode (mode new_mode);
+        void setUnderLights (bool on);
 
     };
 
