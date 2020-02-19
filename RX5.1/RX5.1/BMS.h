@@ -32,9 +32,10 @@ class BMS
         void update (int throttle);
 
         // getters 
-        // double getVoltage ()
-        // double getPercents ()
-        // double whDrawn ()
+        double getCellVoltage ();
+        double getBatVoltage ();
+        double getPercents ();
+        double getWhDrawn ();
 
     };
 

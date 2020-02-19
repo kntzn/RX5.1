@@ -94,3 +94,23 @@ void BMS::update (int throttle)
         getUsageFromPercents ();
         }
     }
+
+double BMS::getCellVoltage ()
+    {
+    return bat_voltage;
+    }
+
+double BMS::getBatVoltage ()
+    {
+    return bat_voltage*N_CELLS;
+    }
+
+double BMS::getPercents ()
+    {
+    return percents;
+    }
+
+double BMS::getWhDrawn ()
+    {
+    return whDrawn;
+    }
