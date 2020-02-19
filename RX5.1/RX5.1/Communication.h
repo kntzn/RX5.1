@@ -9,7 +9,6 @@
 #include "WProgram.h"
 #endif
 
-#include "cobs.h"
 #include "Sarray.h"
 
 #define PACK_SIZE_MAX 64
@@ -31,20 +30,20 @@ class Communication
 
         enum class command
             {
-            nocmd = 0,  // no                            cmd avail
+            nocmd    =  0,  // no                            cmd avail
             rawinput = 'R', // reserved                      cmd
             changeCh = 'C', // change channel                cmd
-            motor = 'M', // change throttle, mode, cruise cmd
-            lights = 'L', // change Llghts state           cmd
+            motor    = 'M', // change throttle, mode, cruise cmd
+            lights   = 'L', // change Llghts state           cmd
             contTrip = 'N', // Start new / continue trip     cmd
-            trip = 'T', // trip controller state         request
-            battery = 'B'  // battery         state         request
+            trip     = 'T', // trip controller state         request
+            battery  = 'B'  // battery         state         request
             };
 
         enum class response
             {
-            noresp = 0,   // no              response avail
-            trip = 't', // trip controller response
+            noresp  = 0,   // no              response avail
+            trip    = 't', // trip controller response
             battery = 'b', // bms             response
             };
 

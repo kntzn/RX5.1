@@ -5,6 +5,7 @@
 #include "Lights.h"
 #include "Config.h"
 #include "SysConfig.h"
+#include "Pinout.h"
 #include "kstd.h"
 
 void Lights::updateBrightness ()
@@ -87,6 +88,10 @@ void Lights::writeToLeds ()
             rl_br = rl_br*(LIGHTS_SMOOTH_K) +BRIGHTNESS_OFF*(1.0 - LIGHTS_SMOOTH_K);
             break;
         }
+
+    analogWrite (LIGHTS_BACK,  rl_br);
+    analogWrite (LIGHTS_FRONT, fl_br);
+    digitalWrite (LIGHTS_UNDER, ul);
     }
 
 Lights::Lights (uint8_t front_lights_pin,
@@ -102,6 +107,7 @@ Lights::Lights (uint8_t front_lights_pin,
     pinMode (front_lights_pin, OUTPUT);
     pinMode ( rear_lights_pin, OUTPUT);
     pinMode (under_lights_pin, OUTPUT);
+    pinMode (    photores_pin, INPUT);
 
     update (THR_MID);
     }

@@ -6,8 +6,8 @@
 
 #define HALL         3
 #define PPM          4
-#define LIGHTS_FRONT 5
-#define LIGHTS_BACK  6
+#define LIGHTS_BACK  5
+#define LIGHTS_FRONT 6
 
 #define BUZZER       7
 
@@ -25,5 +25,5 @@
 
 #define LIGHTS_SENS  A3
 
-#define LIGHTS_UNDER A4
-#define GPIO2        A5
+#define GPIO2        A4
+#define LIGHTS_UNDER A5

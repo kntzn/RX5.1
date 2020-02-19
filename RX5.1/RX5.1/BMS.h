@@ -22,7 +22,7 @@ class BMS
         // Returns average analog reading
         double aver_analog (uint32_t times = 10U);
         
-        void readVoltage ();
+        void readVoltage (bool noFilter = false);
         void getPercentsFromVoltage ();
         void getUsageFromPercents ();
  

@@ -39,7 +39,7 @@ long BMS::readVcc ()
     }
 
 
-void BMS::readVoltage ()
+void BMS::readVoltage (bool noFilter)
     {
     // Reads new voltage
     double new_bat_voltage = (readVcc () * aver_analog () / 1023 / 1000.0);
@@ -48,8 +48,11 @@ void BMS::readVoltage ()
     new_bat_voltage *= ((R1_R2_DIVIDER / R1_DIVIDER) / DIVIDER_K) / N_CELLS;
 
     // Smootes out voltage value
-    bat_voltage = new_bat_voltage * (1.0 - VOLTAGE_SMOOTH_K) + 
-                      bat_voltage *        VOLTAGE_SMOOTH_K;
+    if (!noFilter)
+        bat_voltage = new_bat_voltage * (1.0 - VOLTAGE_SMOOTH_K) +
+                          bat_voltage *        VOLTAGE_SMOOTH_K;
+    else
+        bat_voltage = new_bat_voltage;
     }
 
 void BMS::getPercentsFromVoltage ()
@@ -77,10 +80,11 @@ void BMS::getUsageFromPercents ()
 
 BMS::BMS (uint8_t ADCpin):
     readPin (ADCpin),
-    bat_voltage (3.6),
+    bat_voltage (0),
     percents (0),
     whDrawn (0)
     {
+    readVoltage (true);
     }
 
 void BMS::update (int throttle)
