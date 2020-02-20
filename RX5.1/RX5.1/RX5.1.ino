@@ -37,7 +37,6 @@ int main()
     MotorController VESC (PPM, mode::eco);
 
     lights.setUnderLights (true);
-    Serial.begin (9600);
 
     forever
         {

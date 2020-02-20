@@ -12,6 +12,8 @@
 #include "SysConfig.h"
 #include <Servo.h>
 
+// TODO: fix speed limit & ramp up
+
 class MotorController
     {
     private:
@@ -22,7 +24,7 @@ class MotorController
         double cruiseSpeed;
 
         int throttleOutput;
-        unsigned long previous_thr_time;
+        unsigned long previous_thr_time, last_avail;
 
         int hybridModeThrottle (int thrIn, int current_speed);
         int    ecoModeThrottle (int thrIn, int current_speed, double dt);
@@ -33,6 +35,8 @@ class MotorController
 
          void update (int throttle, mode current_mode,
                       bool cruise, double current_speed);
+
+         int getThrottleOutput ();
     };
 
 #endif

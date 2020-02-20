@@ -75,6 +75,8 @@ Communication::Communication (uint8_t set_pin, uint8_t channel):
     setPin (set_pin),
     channelId (channel)
     {
+    Serial.begin (HC12_BAUD);
+
     pinMode (set_pin, OUTPUT);
     changeCh (channel);
     digitalWrite (set_pin, HIGH);
