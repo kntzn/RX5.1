@@ -29,9 +29,9 @@ class Lights
             };
         enum class env_brightness
             {
-            day,
-            dusk,
-            night
+            day   = 0,
+            dusk  = 1,
+            night = 2
             };
         
 
@@ -44,9 +44,11 @@ class Lights
 
         uint8_t fl_pin, rl_pin, ul_pin, pr_pin;
 
+        int brToI (Lights::env_brightness eb);
+
         void updateBrightness ();
         void automaticLightType ();
-        void writeToLeds ();
+        void writeToLeds (bool brakes);
 
     public:
         Lights (uint8_t front_lights_pin,

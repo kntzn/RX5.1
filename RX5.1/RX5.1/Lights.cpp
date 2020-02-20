@@ -56,7 +56,7 @@ void Lights::automaticLightType ()
         }
     }
 
-void Lights::writeToLeds ()
+void Lights::writeToLeds (bool brakes)
     {
     switch (fl_lt)
         {
@@ -89,7 +89,12 @@ void Lights::writeToLeds ()
             break;
         }
 
-    analogWrite (LIGHTS_BACK,  rl_br);
+    // Stop signal
+    if (!brakes)
+        analogWrite (LIGHTS_BACK,  rl_br);
+    else 
+        analogWrite (LIGHTS_BACK, BRIGHTNESS_FULL);
+
     analogWrite (LIGHTS_FRONT, fl_br);
     digitalWrite (LIGHTS_UNDER, ul);
     }
@@ -102,7 +107,8 @@ Lights::Lights (uint8_t front_lights_pin,
                 bool under_ligths):
     fl_pin (front_lights_pin), rl_pin (rear_lights_pin),
     ul_pin (under_lights_pin), pr_pin (photores_pin),
-    lightsMode (lights_mode), fl_br (0), rl_br (0), ul (under_ligths)
+    lightsMode (lights_mode), fl_br (0), rl_br (0), ul (under_ligths),
+    brightness (env_brightness::day)
     {
     pinMode (front_lights_pin, OUTPUT);
     pinMode ( rear_lights_pin, OUTPUT);
@@ -138,12 +144,9 @@ void Lights::update (int throttle)
         default:
             break;
         }
-     
+    
     // Changes output to leds
-    writeToLeds ();
-    // Stop signal
-    if (throttle < THR_MID - THR_DELTA_TO_MIN*VESC_DEADBAND)
-        rl_br = BRIGHTNESS_FULL;
+    writeToLeds (throttle < THR_MID - THR_DELTA_TO_MIN*VESC_DEADBAND);
     }
 
 void Lights::setMode (mode new_mode)

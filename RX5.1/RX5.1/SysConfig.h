@@ -7,8 +7,8 @@
 #define THR_MID       1500
 #define THR_MIN       1000
 
-#define THR_DELTA_TO_MAX THR_MAX - THR_MID
-#define THR_DELTA_TO_MIN THR_MID - THR_MIN
+#define THR_DELTA_TO_MAX (THR_MAX - THR_MID)
+#define THR_DELTA_TO_MIN (THR_MID - THR_MIN)
 
 // HW cfg:
 #define WHEEL_DIA 0.083

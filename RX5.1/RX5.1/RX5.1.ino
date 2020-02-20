@@ -40,16 +40,17 @@ int main()
 	forever
 		{
         battery.update (1500);
-        Serial.print ("Bat: ");
+        
+        /*Serial.print ("Bat: ");
         Serial.print (battery.getCellVoltage ());
         Serial.print ("V / ");
         Serial.print (battery.getBatVoltage ());
         Serial.print ("V / ");
         Serial.print (battery.getPercents (), 0);
-        Serial.print ("%\n");
+        Serial.print ("%\n");*/
 
         lights.update (1500);
-        lights.setMode (Lights::mode::_rear);
+        lights.setMode (Lights::mode::_auto);
 		}
 	}
    
