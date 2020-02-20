@@ -13,25 +13,27 @@
 #include <Servo.h>
 
 class MotorController
-{
-private:
-    mode rideMode;
-    Servo motor;
+    {
+    private:
+        mode rideMode;
+        Servo motor;
 
-    bool isCruiseActive;
-    double cruiseSpeed;
+        bool isCruiseActive;
+        double cruiseSpeed;
 
-    int throttleOutput;
-    unsigned long previous_thr_time;
+        int throttleOutput;
+        unsigned long previous_thr_time;
 
-    int ecoModeThrottle (int thrIn, int current_speed, double dt);
+        int hybridModeThrottle (int thrIn, int current_speed);
+        int    ecoModeThrottle (int thrIn, int current_speed, double dt);
+        int cruiseModeThrottle (int thrIn, int current_speed, double dt);
 
-public:
-     MotorController (uint8_t PPM_pin, mode ride_mode);
+    public:
+         MotorController (uint8_t PPM_pin, mode ride_mode);
 
-     void update (int throttle, mode current_mode,
-                  bool cruise, double current_speed);
-};
+         void update (int throttle, mode current_mode,
+                      bool cruise, double current_speed);
+    };
 
 #endif
 

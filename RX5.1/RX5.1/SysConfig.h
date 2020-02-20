@@ -27,21 +27,21 @@ enum class mode
     };
 
 // HYBRID
-#define BRAKE_MAX_HYB 0.30
-#define POWER_MAX_HYB 0.10
+#define BRAKE_MAX_HYB (THR_MID - 275)
+#define POWER_MAX_HYB (THR_MID + 117)
 #define SPEED_MIN_HYB 5.00
 #define SPEED_MID_HYB 15.0
 #define SPEED_MAX_HYB 25.0
 
 // ECO
-#define BRAKE_MAX_ECO (THR_MID - 160)
-#define POWER_MAX_ECO (THR_MID + 160)
-#define RAMP_UP_T_ECO 2.00
+#define BRAKE_MAX_ECO (THR_MID - 200)
+#define POWER_MAX_ECO (THR_MID + 200)
+#define RAMP_UP_T_ECO 1.0
 #define MAX_SPEED_ECO 15.0
 
 // NORMAL
-#define BRAKE_MAX_CRU (THR_MID - 280)
-#define POWER_MAX_CRU (THR_MID + 280)
+#define BRAKE_MAX_CRU (THR_MID - 300)
+#define POWER_MAX_CRU (THR_MID + 300)
 #define RAMP_UP_T_CRU 0.50
 #define MAX_SPEED_CRU 25.0
 
@@ -50,3 +50,6 @@ enum class mode
 #define POWER_MAX_SPT (THR_MAX)
 #define RAMP_UP_T_SPT 0.0
 #define MAX_SPEED_SPT 100
+
+#define CRUISE_SPEED_CUTOFF_START  2.0
+#define CRUISE_SPEED_CUTOFF_END   -0.0

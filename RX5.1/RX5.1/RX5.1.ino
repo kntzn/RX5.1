@@ -34,21 +34,24 @@ int main()
     BMS battery (V_BAT);
     Lights lights (LIGHTS_FRONT, LIGHTS_BACK,
                    LIGHTS_UNDER, LIGHTS_SENS, Lights::mode::_off);
+    MotorController VESC (PPM, mode::eco);
 
     lights.setUnderLights (true);
     Serial.begin (9600);
 
-	forever
-		{
+    forever
+        {
+        VESC.update (1500, mode::eco, false, 0);
+    
         battery.update (1500);
         
-        /*Serial.print ("Bat: ");
+        Serial.print ("Bat: ");
         Serial.print (battery.getCellVoltage ());
         Serial.print ("V / ");
         Serial.print (battery.getBatVoltage ());
         Serial.print ("V / ");
         Serial.print (battery.getPercents (), 0);
-        Serial.print ("%\n");*/
+        Serial.print ("%\n");
 
         lights.update (1500);
         lights.setMode (Lights::mode::_auto);

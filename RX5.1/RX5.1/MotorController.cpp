@@ -4,23 +4,73 @@
 
 #include "MotorController.h"
 
+int MotorController::hybridModeThrottle (int thrIn, int current_speed)
+    {
+    if (current_speed < SPEED_MIN_HYB)
+        return THR_MID;
+    else if (current_speed < SPEED_MID_HYB)
+        return map (current_speed,
+                    SPEED_MIN_HYB, SPEED_MID_HYB,
+                    POWER_MAX_HYB, THR_POWER_START);
+    else if (current_speed < SPEED_MAX_HYB)
+        return map (current_speed,
+                    SPEED_MID_HYB, SPEED_MAX_HYB,
+                    THR_BRAKE_START, BRAKE_MAX_HYB);
+    else
+        return BRAKE_MAX_HYB;
+    }
+
 int MotorController::ecoModeThrottle (int thrIn, int current_speed, double dt)
     {
     int thr = 0;
-    int maxThrIncr = (POWER_MAX_ECO - THR_POWER_START) * ((dt/1000.0)/(RAMP_UP_T_ECO));
+    //int maxThrIncr = (POWER_MAX_ECO - THR_POWER_START) * ((dt/1000.0)/(RAMP_UP_T_ECO));
 
     if (thrIn < THR_BRAKE_START)
         thr = map (thrIn, THR_MIN, THR_BRAKE_START, BRAKE_MAX_ECO, THR_BRAKE_START);
     else if (thrIn > THR_POWER_START)
         {
         thr = map (thrIn, THR_POWER_START, THR_MAX, THR_POWER_START, POWER_MAX_ECO);
+
         // Chops throttle if it rises rapidly
-        if (thr - throttleOutput > maxThrIncr && throttleOutput > THR_MID)
-            thr = throttleOutput + maxThrIncr;
+        //if (thr - throttleOutput > maxThrIncr)
+        //    thr = throttleOutput + maxThrIncr;
         }
     else
         thr = THR_MID;
 
+    // Speed limiter 
+    /*if (current_speed > MAX_SPEED_ECO - CRUISE_SPEED_CUTOFF_START && thr > THR_MID)
+        thr = map (current_speed, 
+                   MAX_SPEED_ECO - CRUISE_SPEED_CUTOFF_START, MAX_SPEED_ECO,
+                   thr,                                       THR_MID);
+*/
+    return thr;
+    }
+
+int MotorController::cruiseModeThrottle (int thrIn, int current_speed, double dt)
+    {
+    int thr = 0;
+    //int maxThrIncr = (POWER_MAX_CRU - THR_POWER_START) * ((dt/1000.0)/(RAMP_UP_T_CRU));
+
+    if (thrIn < THR_BRAKE_START)
+        thr = map (thrIn, THR_MIN, THR_BRAKE_START, BRAKE_MAX_CRU, THR_BRAKE_START);
+    else if (thrIn > THR_POWER_START)
+        {
+        thr = map (thrIn, THR_POWER_START, THR_MAX, THR_POWER_START, POWER_MAX_CRU);
+
+        // Chops throttle if it rises rapidly
+        //if (thr - throttleOutput > maxThrIncr)
+        //    thr = throttleOutput + maxThrIncr;
+        }
+    else
+        thr = THR_MID;
+
+    // Speed limiter 
+    /*if (current_speed > MAX_SPEED_CRU - CRUISE_SPEED_CUTOFF_START && thr > THR_MID)
+    thr = map (current_speed,
+    MAX_SPEED_CRU - CRUISE_SPEED_CUTOFF_START, MAX_SPEED_CRU,
+    thr,                                       THR_MID);
+    */
     return thr;
     }
 
@@ -62,15 +112,20 @@ void MotorController::update (int throttle, mode current_mode,
             throttleOutput = THR_MIN;
             break;
         case mode::hybrid:
+            throttleOutput = hybridModeThrottle (throttle, current_speed);
             break;
         case mode::eco:
-            throttleOutput = ecoModeThrottle (throttle, current_speed, dt);
+            throttleOutput =    ecoModeThrottle (throttle, current_speed, dt);
             break;
         case mode::cruise:
+            throttleOutput = cruiseModeThrottle (throttle, current_speed, dt);
             break;
         case mode::sport:
+            throttleOutput = throttle;
             break;
         default:
             break;
         }
+
+    motor.writeMicroseconds (throttleOutput);
     }
