@@ -9,6 +9,10 @@ Firmware for the esk8 rx unit HW5.1.x
 - Rawinput mode
 - Failsafe
 
+Parameters
+  - Channel;
+  - Rawinput (?)
+  
 ## Motor controller
 
 - Multiple ride modes
@@ -33,6 +37,10 @@ Firmware for the esk8 rx unit HW5.1.x
 - Automatic mode switch according to the battery state (5%/15%/25%/25%)
 - Cruise control
 
+Parameters
+  - Mode;
+  - Cruise speed
+  
 ## Ride controller
 
 - Speedometer
@@ -48,6 +56,16 @@ Firmware for the esk8 rx unit HW5.1.x
   - Acceleration
   - Battery voltage
 
+Parameters
+  - Trip id[L]; 
+  - Bench id[L];
+  - Speed(0-50, res=1)
+  - Accel(0-8, res = 0.1);
+  - Odo(0-9999, res = 1)
+  - Trip(0-99, res = 0.1); 
+  - Left distance(0-99, res = 0.1)
+  - Battery consumption (0-25, res = 0.1)
+
 ## BMS
 
 - Battery volatge
@@ -56,6 +74,11 @@ Firmware for the esk8 rx unit HW5.1.x
   - Gets voltage for calculations only without throttle
 - Battery capacity left/consumed
   - Based on battery percents
+
+Parameters
+  - Voltage (0-25.2, res=0.1);
+  - Percents (0-100, res=1);
+  - Capacity (0-222, res=1)
 
 ## Light controller
 
@@ -82,6 +105,10 @@ Firmware for the esk8 rx unit HW5.1.x
 - Underlights
 
 - Fade in at startup
+
+Parameters
+  - Lights mode (0-4, res = 1);
+  - Underlights state (0-1, res = 1)
 
 ## Logging
 
