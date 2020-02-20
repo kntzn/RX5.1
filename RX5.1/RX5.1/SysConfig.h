@@ -28,6 +28,9 @@ enum class mode
     sport
     };
 
+// LOCK
+#define SPEED_MAX_LCK 2.0
+
 // HYBRID
 #define BRAKE_MAX_HYB (THR_MID - 275)
 #define POWER_MAX_HYB (THR_MID + 117)
@@ -52,6 +55,7 @@ enum class mode
 #define POWER_MAX_SPT (THR_MAX)
 #define RAMP_UP_T_SPT 0.0
 #define MAX_SPEED_SPT 100
+
 
 #define CRUISE_SPEED_CUTOFF_START  2.0
 #define CRUISE_SPEED_CUTOFF_END   -0.0

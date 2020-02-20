@@ -19,7 +19,6 @@ int MotorController::hybridModeThrottle (int thrIn, int current_speed)
     else
         return BRAKE_MAX_HYB;
     }
-
 int MotorController::ecoModeThrottle (int thrIn, int current_speed, double dt)
     {
     int thr = 0;
@@ -46,7 +45,6 @@ int MotorController::ecoModeThrottle (int thrIn, int current_speed, double dt)
 */
     return thr;
     }
-
 int MotorController::cruiseModeThrottle (int thrIn, int current_speed, double dt)
     {
     int thr = 0;
@@ -74,6 +72,51 @@ int MotorController::cruiseModeThrottle (int thrIn, int current_speed, double dt
     return thr;
     }
 
+void MotorController::failSafe ()
+    {
+    // Time scince failsafe activation
+    unsigned long delta = (millis () - last_avail) - FAILSAFE_MS;
+
+    // Ramp up process
+    if (delta < FAILSAFE_RAMP_UP)
+        {
+        // Ramp up percents
+        float k = float (delta) / float (FAILSAFE_RAMP_UP);
+        // Slide from initial signal to full lock
+        int rampDownSignal = (1.f - k) * (throttleOutput) +
+            k  * (PPM_MIN);
+
+        motor.writeMicroseconds (rampDownSignal);
+        }
+    // Full motor lock
+    else
+        motor.writeMicroseconds (PPM_MIN);
+    }
+void MotorController::updateMode (int throttle, mode input_mode, 
+                                  int current_speed)
+    {
+    if (throttle < THR_MID + THR_DELTA_TO_MAX*VESC_DEADBAND &&
+        throttle > THR_MID - THR_DELTA_TO_MIN*VESC_DEADBAND)
+            switch (input_mode)
+                {
+                case mode::lock:
+                    if (current_speed < SPEED_MAX_LCK)
+                        rideMode = input_mode;
+                    break;
+                case mode::hybrid:
+                    if (current_speed < SPEED_MID_HYB)
+                        rideMode = input_mode;
+                    break;
+                case mode::eco:
+                case mode::cruise:
+                case mode::sport:
+                    rideMode = input_mode;
+                    break;
+                default:
+                    break;
+                }
+    }
+
 MotorController::MotorController (uint8_t PPM_pin, mode ride_mode):
     isCruiseActive (false),
     throttleOutput (THR_MID),
@@ -89,34 +132,32 @@ MotorController::MotorController (uint8_t PPM_pin, mode ride_mode):
 void MotorController::update (int throttle, mode current_mode, 
                               bool cruise, double current_speed)
     {
-    double dt = millis () - previous_thr_time;
-    previous_thr_time = millis ();
+    // Timers
+    double dt = millis () - previous_thr_time; // Gets time delta for ramp up
+    previous_thr_time = millis ();             // Starts timer once again
+    if (throttle)                              // |
+        last_avail = millis ();                // |Keeps failsafe deactivated
 
-    // Cruise mode
-    //        gets activated
+    // Cruise mode activation
     if (!isCruiseActive && cruise)
         {
         isCruiseActive = true;
         cruiseSpeed = current_speed;
         }
-    //        gets deactivated
+    //             deactivation
     if (isCruiseActive && !cruise)
         {
         isCruiseActive = false;
         cruiseSpeed = 0;
         }
 
-    // Mode switching
-    if (throttle < THR_MID + THR_DELTA_TO_MAX*VESC_DEADBAND &&
-        throttle > THR_MID - THR_DELTA_TO_MIN*VESC_DEADBAND)
-        rideMode = current_mode;
+    // Updates mode according to limitations
+    updateMode (throttle, current_mode, current_speed);
 
-    if (throttle != 0)
-        last_avail = millis ();
-
-    // Throttle control + failsafe
+    // Throttle control
     if (millis () - last_avail < FAILSAFE_MS)
         {
+        // Converts input signal to output throttle according to the mode
         switch (rideMode)
             {
             case mode::lock:
@@ -139,25 +180,10 @@ void MotorController::update (int throttle, mode current_mode,
             }
         motor.writeMicroseconds (throttleOutput);
         }
+    // And failsafe
     else
-        {
-        // Time scince failsafe activation
-        unsigned long delta = (millis () - last_avail) - FAILSAFE_MS;
-
-        // Ramp up process
-        if (delta < FAILSAFE_RAMP_UP)
-            {
-            float k = float (delta) / float (FAILSAFE_RAMP_UP);
-            int rampDownSignal = k * PPM_MIN + (1.f - k) * (throttle);
-
-            motor.writeMicroseconds (rampDownSignal);
-            }
-        // Full motor lock
-        else
-            motor.writeMicroseconds (PPM_MIN);
-        }
+        failSafe ();
     }
-
 int MotorController::getThrottleOutput ()
     {
     return motor.readMicroseconds ();
