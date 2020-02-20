@@ -9,6 +9,8 @@
 
 #define THR_DELTA_TO_MAX (THR_MAX - THR_MID)
 #define THR_DELTA_TO_MIN (THR_MID - THR_MIN)
+#define THR_BRAKE_START  (THR_MID - THR_DELTA_TO_MIN*VESC_DEADBAND)
+#define THR_POWER_START  (THR_MID + THR_DELTA_TO_MAX*VESC_DEADBAND)
 
 // HW cfg:
 #define WHEEL_DIA 0.083
@@ -24,14 +26,27 @@ enum class mode
     sport
     };
 
+// HYBRID
+#define BRAKE_MAX_HYB 0.30
+#define POWER_MAX_HYB 0.10
+#define SPEED_MIN_HYB 5.00
+#define SPEED_MID_HYB 15.0
+#define SPEED_MAX_HYB 25.0
+
 // ECO
-#define BRAKE_MAX_ECO 0.25
-#define POWER_MAX_ECO 0.25
+#define BRAKE_MAX_ECO (THR_MID - 160)
+#define POWER_MAX_ECO (THR_MID + 160)
+#define RAMP_UP_T_ECO 2.00
+#define MAX_SPEED_ECO 15.0
 
 // NORMAL
-#define BRAKE_MAX_NRM 0.5
-#define POWER_MAX_NRM 0.5
+#define BRAKE_MAX_CRU (THR_MID - 280)
+#define POWER_MAX_CRU (THR_MID + 280)
+#define RAMP_UP_T_CRU 0.50
+#define MAX_SPEED_CRU 25.0
 
 // SPORT
-#define BRAKE_MAX_SPR 1.0
-#define POWER_MAX_SPR 1.0
+#define BRAKE_MAX_SPT (THR_MIN)
+#define POWER_MAX_SPT (THR_MAX)
+#define RAMP_UP_T_SPT 0.0
+#define MAX_SPEED_SPT 100

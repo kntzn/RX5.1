@@ -15,11 +15,17 @@
 class MotorController
 {
 private:
-    bool isCruiseActive;
     mode rideMode;
-    double cruiseSpeed;
     Servo motor;
-    
+
+    bool isCruiseActive;
+    double cruiseSpeed;
+
+    int throttleOutput;
+    unsigned long previous_thr_time;
+
+    int ecoModeThrottle (int thrIn, int current_speed, double dt);
+
 public:
      MotorController (uint8_t PPM_pin, mode ride_mode);
 
