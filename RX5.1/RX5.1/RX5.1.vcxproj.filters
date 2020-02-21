@@ -57,6 +57,9 @@
     <ClInclude Include="DriveController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HallSensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Communication.cpp">
@@ -72,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DriveController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HallSensor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

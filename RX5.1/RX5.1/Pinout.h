@@ -4,7 +4,7 @@
 
 #define HC12_SET     2
 
-#define HALL         3
+#define HALL         INT1
 #define PPM          4
 #define LIGHTS_BACK  5
 #define LIGHTS_FRONT 6

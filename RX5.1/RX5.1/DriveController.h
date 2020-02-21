@@ -10,6 +10,7 @@
 #endif
 
 #include "MotorController.h"
+#include "HallSensor.h"
 #include "Sarray.h"
 
 class DriveController
@@ -25,8 +26,9 @@ class DriveController
         double odo, trip, left;
         double consumption;
 
+        HallSensor      hallSens;
         MotorController motor;
-        sarray <BenchParams, BENCHMODE_SECONDS> benchmarkBuffer;
+        //sarray <BenchParams, BENCHMODE_SECONDS> benchmarkBuffer;
 
     public:
 

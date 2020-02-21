@@ -11,24 +11,32 @@
 
 #include "SysConfig.h"
 
-double speed = 0.0;
-unsigned long int last_hs_sesnsed = millis ();
 
-void hsInterruptHandler ()
+// Those variables and methods are public
+// to allow attachInterrupt use this handler
+namespace _HS
     {
-    speed = (WHEEL_DIA * M_PI) /
-        ((millis () - last_hs_sesnsed) / 1000.0) *
-        3.6;
+    unsigned long int last_hs_sensed, dt;
 
-    last_hs_sesnsed = millis ();
-    }
+    void _hndlr ()
+        {
+        dt = millis () - last_hs_sensed;
+        last_hs_sensed += dt;
+        }
+    };
 
-double getSpeed ()
+class HallSensor
     {
-    if (millis () - last_hs_sesnsed > 500)
-        return 0.0;
+    private:
+        double speed, accel;
+    public:
+        HallSensor (uint8_t hs_interrupt);
 
-    return speed;
-    }
+        void update ();
+
+        double getSpeed ();
+        double getAccel ();
+    };
+
 #endif
 
