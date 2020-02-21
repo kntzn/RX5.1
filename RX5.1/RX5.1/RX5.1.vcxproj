@@ -116,6 +116,7 @@
     <ClInclude Include="cobs.h" />
     <ClInclude Include="Communication.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="DriveController.h" />
     <ClInclude Include="MotorController.h" />
     <ClInclude Include="kstd.h" />
     <ClInclude Include="Lights.h" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="BMS.cpp" />
     <ClCompile Include="Communication.cpp" />
+    <ClCompile Include="DriveController.cpp" />
     <ClCompile Include="MotorController.cpp" />
     <ClCompile Include="Lights.cpp" />
   </ItemGroup>

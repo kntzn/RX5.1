@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <string.h>
 #include "cobs.h"
+#include "SysConfig.h"
 
 #define StartBlock()	(code_ptr = dst++, code = 1)
 #define FinishBlock()	(*code_ptr = code)

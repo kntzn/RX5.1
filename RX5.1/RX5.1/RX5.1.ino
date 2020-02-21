@@ -16,13 +16,13 @@
 // 	                        |__________________________________|
 //
 
-#include "MotorController.h"
+
+#include "DriveController.h"
 #include "kstd.h"
 #include "Lights.h"
 #include "BMS.h"
 #include "Pinout.h"
 #include "Communication.h"
-
 
 
 void initialize();
@@ -34,13 +34,16 @@ int main()
     BMS battery (V_BAT);
     Lights lights (LIGHTS_FRONT, LIGHTS_BACK,
                    LIGHTS_UNDER, LIGHTS_SENS, Lights::mode::_off);
-    MotorController VESC (PPM, mode::eco);
+    //MotorController VESC (PPM, mode::eco);
+    DriveController (0, 0, 4, mode::eco, 0); // TODO: EEPROM load mode, 
+                                             // tripId, benchId, pin,
+                                             // mode, prev_tip+cont.last.trip
 
     lights.setUnderLights (true);
 
     forever
         {
-        VESC.update (1500, mode::eco, false, 0);
+      //  VESC.update (1500, mode::eco, false, 0);
     
         battery.update (1500);
         

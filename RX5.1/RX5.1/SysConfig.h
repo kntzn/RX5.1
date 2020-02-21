@@ -13,10 +13,12 @@
 #define THR_POWER_START  (THR_MID + THR_DELTA_TO_MAX*VESC_DEADBAND)
 
 #define HC12_BAUD 9600
+#define BENCHMODE_SECONDS 25
 
 // HW cfg:
 #define WHEEL_DIA 0.083
 #define BAT_WH 222
+
 
 // Modes cfg:
 enum class mode
