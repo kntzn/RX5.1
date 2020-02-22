@@ -36,8 +36,9 @@ Parameters
   - 1-3s ramp-down time to -100% throttle
 - Automatic mode switch according to the battery state (5%/15%/25%/25%)
 
-Parameters
-  - Mode
+Parameters (3b)
+  - Throttle (2b);
+  - Mode (1b);
   
 ## Ride controller
 
@@ -54,16 +55,16 @@ Parameters
   - Acceleration
   - Battery voltage
 
-Parameters
+Parameters (9b)
   - Trip id[L]; 
   - Bench id[L];
-  - Speed(0-50, res=1)
-  - Accel(0-8, res = 0.1);
-  - Odo(0-9999, res = 1)
-  - Trip(0-99, res = 0.1); 
-  - Left distance(0-99, res = 0.1)
-  - Battery consumption (0-25, res = 0.1)
-
+  - Speed(0-50, res=1, 1b)
+  - Accel(0-8, res = 0.1, 1b);
+  - Odo(0-9999, res = 1, 2b)
+  - Trip(0-99, res = 0.1, 2b); 
+  - Left distance(0-99, res = 0.1, 2b)
+  - Battery consumption (0-25, res = 0.1, 1b)
+  
 ## BMS
 
 - Battery volatge
@@ -73,10 +74,10 @@ Parameters
 - Battery capacity left/consumed
   - Based on battery percents
 
-Parameters
-  - Voltage (0-25.2, res=0.1);
-  - Percents (0-100, res=1);
-  - Capacity (0-222, res=1)
+Parameters (3b)
+  - Voltage (0-25.2, res=0.1, 1b);
+  - Percents (0-100, res=1, 1b;
+  - Capacity (0-222, res=1, 1b)
 
 ## Light controller
 
@@ -104,7 +105,7 @@ Parameters
 
 - Fade in at startup
 
-Parameters
+Parameters (1b)
   - Lights mode (0-4, res = 1);
   - Underlights state (0-1, res = 1)
 
