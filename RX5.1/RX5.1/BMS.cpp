@@ -118,3 +118,8 @@ double BMS::getWhDrawn ()
     {
     return whDrawn;
     }
+
+double BMS::getWhLeft ()
+    {
+    return BAT_WH - whDrawn;
+    }

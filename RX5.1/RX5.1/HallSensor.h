@@ -17,17 +17,20 @@
 namespace _HS
     {
     unsigned long int last_hs_sensed, dt;
+    int new_turns;
 
     void _hndlr ()
         {
         dt = millis () - last_hs_sensed;
         last_hs_sensed += dt;
+        new_turns++;
         }
     };
 
 class HallSensor
     {
     private:
+        int new_turns;
         double speed, accel;
     public:
         HallSensor (uint8_t hs_interrupt);
@@ -36,6 +39,7 @@ class HallSensor
 
         double getSpeed ();
         double getAccel ();
+        int getNewTurnsAmount ();
     };
 
 #endif

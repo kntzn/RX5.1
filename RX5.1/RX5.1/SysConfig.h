@@ -17,7 +17,7 @@
 
 // HW cfg:
 #define WHEEL_DIA 0.083
-#define BAT_WH 222
+#define BAT_WH 222.0
 
 
 // Modes cfg:

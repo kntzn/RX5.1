@@ -36,6 +36,7 @@ class BMS
         double getBatVoltage ();
         double getPercents ();
         double getWhDrawn ();
+        double getWhLeft ();
 
     };
 
