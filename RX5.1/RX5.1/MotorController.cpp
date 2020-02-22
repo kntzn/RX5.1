@@ -118,10 +118,8 @@ void MotorController::updateMode (int throttle, mode input_mode,
     }
 
 MotorController::MotorController (uint8_t PPM_pin, mode ride_mode):
-    isCruiseActive (false),
     throttleOutput (THR_MID),
     rideMode (ride_mode),
-    cruiseSpeed (0),
     previous_thr_time (millis ()),
     last_avail (millis ())
     {
@@ -129,27 +127,13 @@ MotorController::MotorController (uint8_t PPM_pin, mode ride_mode):
     motor.writeMicroseconds (THR_MID);
     }
 
-void MotorController::update (int throttle, mode current_mode, 
-                              bool cruise, double current_speed)
+void MotorController::update (int throttle, mode current_mode, double current_speed)
     {
     // Timers
     double dt = millis () - previous_thr_time; // Gets time delta for ramp up
     previous_thr_time = millis ();             // Starts timer once again
     if (throttle)                              // |
         last_avail = millis ();                // |Keeps failsafe deactivated
-
-    // Cruise mode activation
-    if (!isCruiseActive && cruise)
-        {
-        isCruiseActive = true;
-        cruiseSpeed = current_speed;
-        }
-    //             deactivation
-    if (isCruiseActive && !cruise)
-        {
-        isCruiseActive = false;
-        cruiseSpeed = 0;
-        }
 
     // Updates mode according to limitations
     updateMode (throttle, current_mode, current_speed);

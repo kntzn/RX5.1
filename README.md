@@ -35,11 +35,9 @@ Parameters
 - Failsafe
   - 1-3s ramp-down time to -100% throttle
 - Automatic mode switch according to the battery state (5%/15%/25%/25%)
-- Cruise control
 
 Parameters
-  - Mode;
-  - Cruise speed
+  - Mode
   
 ## Ride controller
 

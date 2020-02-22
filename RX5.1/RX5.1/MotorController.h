@@ -20,9 +20,6 @@ class MotorController
         mode rideMode;
         Servo motor;
 
-        bool isCruiseActive;
-        double cruiseSpeed;
-
         int throttleOutput;
         unsigned long previous_thr_time, last_avail;
 
@@ -41,8 +38,7 @@ class MotorController
          MotorController (uint8_t PPM_pin, mode ride_mode);
 
          // Main motor handler function
-         void update (int throttle, mode current_mode,
-                      bool cruise, double current_speed);
+         void update (int throttle, mode current_mode, double current_speed);
 
          // Returns output to PPM channel
          int getThrottleOutput ();
