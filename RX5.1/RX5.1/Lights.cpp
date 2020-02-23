@@ -149,6 +149,16 @@ void Lights::update (int throttle)
     writeToLeds (throttle < THR_MID - THR_DELTA_TO_MIN*VESC_DEADBAND);
     }
 
+void Lights::setValues (uint8_t * data_buffer)
+    {
+    // if packet updated successfully
+    if (data_buffer)
+        {
+        lightsMode = static_cast <Lights::mode> (data_buffer [0]);
+        ul =         static_cast <bool>         (data_buffer [1]);
+        }
+    }
+
 void Lights::setMode (mode new_mode)
     {
     lightsMode = new_mode;

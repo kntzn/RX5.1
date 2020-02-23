@@ -51,20 +51,28 @@ int main()
 
     forever
         {
-        // 
-        //failsafe = true;
-        //
-        //switch (HC12.receiveRequest ())
-        //    {
-        //    case motor:
-        //        drive.update (HC12.argbuf, battery);
-        //        failsafe = false;
-        //    }
+        failsafe = true;
         
-
-
+        switch (HC12.receiveRequest ())
+            {
+            case Communication::command::nocmd:
+                break;
+            case Communication::command::changeCh:
+                HC12.changeCh (HC12.argbuf [0]);
+                break;
+            case Communication::command::motor:
+                drive.update (HC12.argbuf (), battery);
+                failsafe = false;
+                break;
+            case Communication::command::lights:
+                lights.setValues (HC12.argbuf ());
+                break;
+            //case Communication::command::trip:
+                //drive.
+            }
+        
         if (failsafe)
-            drive.update (0, last_mode, battery);
+            drive.update (nullptr, battery);
     
         battery.update (drive.getPPMoutput ());
         

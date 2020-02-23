@@ -40,9 +40,7 @@ class DriveController
                          double battery_wh_left,
                          double odometer, double previos_trip = 0.0);
 
-        void update (int new_throttle, mode new_mode, BMS battery);
-
-
+        void update (uint8_t* data_buffer, BMS battery);
 
         // Returns output to the motor
         int getPPMoutput ();

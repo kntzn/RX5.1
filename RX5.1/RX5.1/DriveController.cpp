@@ -17,10 +17,21 @@ DriveController::DriveController (uint16_t trip_id, uint16_t bench_id,
     {
     }
 
-void DriveController::update (int new_throttle, mode new_mode, BMS battery)
+void DriveController::update (uint8_t* data_buffer, BMS battery)
     {
     // Updates components
-    motor.update (new_throttle, new_mode, hallSens.getSpeed ());
+    if (data_buffer)
+        {
+        // gets two-bit throttle value
+        int thr = data_buffer [0] * 256 + data_buffer [1];
+        motor.update (thr, 
+                      static_cast <mode> (data_buffer [2]), 
+                      hallSens.getSpeed ());
+        }
+    // If no packet available - turn on failsafe
+    else
+        motor.update (0, mode::eco, hallSens.getSpeed ());
+        
     hallSens.update ();
     
     // Speed and accel

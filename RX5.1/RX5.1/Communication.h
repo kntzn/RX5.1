@@ -26,8 +26,7 @@
 
 class Communication
     {
-    private:
-
+    public:
         enum class command
             {
             nocmd    =  0,  // no                            cmd avail
@@ -47,6 +46,7 @@ class Communication
             battery = 'b', // bms             response
             };
 
+    private:    
         sarray <uint8_t, PACK_SIZE_MAX + 1> inputBuf;
         uint8_t buffer [PACK_SIZE_MAX];
 

@@ -44,8 +44,6 @@ class Lights
 
         uint8_t fl_pin, rl_pin, ul_pin, pr_pin;
 
-        int brToI (Lights::env_brightness eb);
-
         void updateBrightness ();
         void automaticLightType ();
         void writeToLeds (bool brakes);
@@ -57,12 +55,16 @@ class Lights
                 uint8_t photores_pin,
                 mode lights_mode,
                 bool under_ligths = false);
-
+         
         void update (int throttle);
         
+        // Databuf-based setter
+        void setValues (uint8_t* data_buffer);
+
+        // Manual setters
         void setMode (mode new_mode);
         void setUnderLights (bool on);
-
+        
     };
 
 #endif
