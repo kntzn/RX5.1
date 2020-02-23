@@ -12,6 +12,7 @@
 #include "MotorController.h"
 #include "HallSensor.h"
 #include "Sarray.h"
+#include "BMS.h"
 
 #define D_C_UNREADY -1
 
@@ -37,6 +38,7 @@ class DriveController
     public:
         DriveController (uint16_t tripId, uint16_t benchId,
                          uint8_t motor_pin, mode drive_mode,
+                         uint8_t hallsens_interrupt,
                          double battery_wh_left,
                          double odometer, double previos_trip = 0.0);
 
@@ -47,13 +49,15 @@ class DriveController
 
         // Returns odo if board has just stopped
         // Otherwise returns UNREADY flag
-        int odoToWriteToEEPROM ();
+        double odoToWriteToEEPROM ();
         // Returns totalTrip if board has just stopped
         // Otherwise returns UNREADY flag
-        int trpToWriteToEEPROM ();
+        double trpToWriteToEEPROM ();
         // Returns mode if board has just stopped
         // Otherwise returns UNREADY flag
-        int trpToWriteToEEPROM ();
+        //uint8_t modeToWriteToEEPROM ();
+
+        void readTripInfo (uint8_t* buffer);
     };
 
 #endif

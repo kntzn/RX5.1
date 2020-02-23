@@ -36,7 +36,7 @@ int main()
 
     Lights lights (LIGHTS_FRONT, LIGHTS_BACK,
                    LIGHTS_UNDER, LIGHTS_SENS, Lights::mode::_off);
-    DriveController drive (0, 0, 4, mode::eco, battery.getWhLeft (), 0.0, 0.0);
+    DriveController drive (0, 0, 4, mode::eco, HALL, battery.getWhLeft (), 0.0, 0.0);
     
     // TODO: EEPROM load mode, 
     // tripId, benchId, pin,
@@ -58,7 +58,7 @@ int main()
             case Communication::command::nocmd:
                 break;
             case Communication::command::changeCh:
-                HC12.changeCh (HC12.argbuf [0]);
+                HC12.changeCh (HC12.argbuf ()[0]);
                 break;
             case Communication::command::motor:
                 drive.update (HC12.argbuf (), battery);
@@ -67,8 +67,10 @@ int main()
             case Communication::command::lights:
                 lights.setValues (HC12.argbuf ());
                 break;
-            //case Communication::command::trip:
-                //drive.
+            case Communication::command::trip:
+                drive.readTripInfo (HC12.argbuf ());
+                HC12.sendResponse (Communication::response::trip);
+                break;
             }
         
         if (failsafe)

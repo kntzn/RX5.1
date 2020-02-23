@@ -12,6 +12,8 @@
 #include "SysConfig.h"
 
 
+#ifndef _HS
+#define _HS
 // Those variables and methods are public
 // to allow attachInterrupt use this handler
 namespace _HS
@@ -26,6 +28,7 @@ namespace _HS
         new_turns++;
         }
     };
+#endif
 
 class HallSensor
     {
