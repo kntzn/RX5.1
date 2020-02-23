@@ -110,3 +110,47 @@ void Communication::changeCh (uint8_t ch)
     digitalWrite (setPin, HIGH);
     delay (AT_MODE_OFF_DELAY);
     }
+
+void Communication::sendCommand (command cmd)
+    {
+    buffer [0] = static_cast <uint8_t>  (cmd);
+
+    sendPacket (buffer, PACK_SIZE_DEFAULT);
+    }
+
+void Communication::sendResponse (response rsp)
+    {
+    buffer [0] = static_cast <uint8_t> (rsp);
+     
+    for (int i = 0; i < RESPONSE_PACKETS; i++)
+        sendPacket (buffer, PACK_SIZE_DEFAULT);
+    }
+
+Communication::command Communication::receiveRequest ()
+    {
+    // If new packet's size is correct
+    if (receivePacket (buffer) == PACK_SIZE_DEFAULT)
+        {
+        return static_cast <command> (buffer [0]);
+        }
+    return command::nocmd;
+    }
+
+Communication::response Communication::receiveResponse ()
+    {
+    // If new packet's size is correct
+    if (receivePacket (buffer) == PACK_SIZE_DEFAULT)
+        {
+        return static_cast <response> (buffer [0]);
+        }
+    return response::noresp;
+    }
+
+
+
+
+uint8_t * Communication::argbuf ()
+    {
+    // offset by 1 byte (command byte)
+    return (buffer + 1);
+    }

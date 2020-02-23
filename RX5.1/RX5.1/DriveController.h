@@ -42,10 +42,18 @@ class DriveController
 
         void update (int new_throttle, mode new_mode, BMS battery);
 
+
+
+        // Returns output to the motor
+        int getPPMoutput ();
+
         // Returns odo if board has just stopped
         // Otherwise returns UNREADY flag
         int odoToWriteToEEPROM ();
         // Returns totalTrip if board has just stopped
+        // Otherwise returns UNREADY flag
+        int trpToWriteToEEPROM ();
+        // Returns mode if board has just stopped
         // Otherwise returns UNREADY flag
         int trpToWriteToEEPROM ();
     };

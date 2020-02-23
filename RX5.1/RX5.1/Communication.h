@@ -12,7 +12,7 @@
 #include "Sarray.h"
 
 #define PACK_SIZE_MAX 64
-#define PACK_SIZE_DEFAULT 4
+#define PACK_SIZE_DEFAULT 10
 #define EOP 0x00
 #define N_CHANNELS 100
 #define AT_MODE_ON_DELAY 80
@@ -62,19 +62,18 @@ class Communication
 
         // TODO:
 
-        //void sendCommand(command cmd, uint16_t arg = 0);
-        //void sendRequest(command req);
-        //void sendResponse(response resp, uint16_t val = 0);
+        void sendCommand(command cmd);
+        void sendResponse(response rsp);
 
-        //command receiveRequest();
-        //response receiveResponse();
+        command receiveRequest();
+        response receiveResponse();
 
         //void activateRawinput();
         //void flush();
 
         //bool rawinputActive();
         // Returns ptr to the args. array
-        //uint8_t *argbuf();
+        uint8_t *argbuf();
 
     };
 

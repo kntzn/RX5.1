@@ -35,12 +35,17 @@ void DriveController::update (int new_throttle, mode new_mode, BMS battery)
     
     // battery consumption as Wh/km scince startup
     consumption = trip?
-                  (batteryLeft - battery.getWhDrawn ()) / (trip) : 
+                  (batteryLeft - battery.getWhLeft ()) / (trip) : 
                   0.0;
     left = consumption?
            battery.getWhLeft () / consumption:
            0.0;
 
+    }
+
+int DriveController::getPPMoutput ()
+    {
+    return motor.getThrottleOutput ();
     }
 
 int DriveController::odoToWriteToEEPROM ()
