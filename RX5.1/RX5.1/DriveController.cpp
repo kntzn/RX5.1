@@ -33,6 +33,7 @@ void DriveController::update (uint8_t* data_buffer, BMS battery)
     else
         motor.update (0, mode::eco, hallSens.getSpeed ());
         
+
     hallSens.update ();
     
     // Speed and accel
@@ -80,13 +81,13 @@ double DriveController::trpToWriteToEEPROM ()
 
 void DriveController::readTripInfo (uint8_t * buffer)
     {
-    buffer [0] = static_cast <int> (speed);                     // Speed
-    buffer [1] = static_cast <int> (acceleration*10.0 + 127.0); // Accel 
-    buffer [2] = static_cast <int> (odo/256);                   // Odo hb
-    buffer [3] = static_cast <int> (odo) % 256;                 // Odo lb
-    buffer [4] = static_cast <int> (totalTrip/256);             // Odo hb
-    buffer [5] = static_cast <int> (totalTrip) % 256;           // Odo lb
-    buffer [6] = static_cast <int> (left /256);                 // Odo hb
-    buffer [7] = static_cast <int> (left) % 256;                // Odo lb
-    buffer [8] = static_cast <int> (consumption/10.0);          // Consumption
+    buffer [0] = static_cast <uint8_t> (speed);                     // Speed
+    buffer [1] = static_cast <uint8_t> (acceleration*10.0 + 127.0); // Accel 
+    buffer [2] = static_cast <uint8_t> (odo/256);                   // Odo hb
+    buffer [3] = static_cast <uint8_t> (odo) % 256;                 // Odo lb
+    buffer [4] = static_cast <uint8_t> (totalTrip/256);             // Odo hb
+    buffer [5] = static_cast <uint8_t> (totalTrip) % 256;           // Odo lb
+    buffer [6] = static_cast <uint8_t> (left /256);                 // Odo hb
+    buffer [7] = static_cast <uint8_t> (left) % 256;                // Odo lb
+    buffer [8] = static_cast <uint8_t> (consumption/10.0);          // Consumption
     }

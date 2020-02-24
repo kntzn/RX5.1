@@ -137,36 +137,42 @@ void MotorController::update (int throttle, mode current_mode, double current_sp
 
     // Updates mode according to limitations
     updateMode (throttle, current_mode, current_speed);
-
+    
     // Throttle control
     if (millis () - last_avail < FAILSAFE_MS)
         {
-        // Converts input signal to output throttle according to the mode
-        switch (rideMode)
+        if (throttle)
             {
-            case mode::lock:
-                throttleOutput = THR_MIN;
-                break;
-            case mode::hybrid:
-                throttleOutput = hybridModeThrottle (throttle, current_speed);
-                break;
-            case mode::eco:
-                throttleOutput = ecoModeThrottle (throttle, current_speed, dt);
-                break;
-            case mode::cruise:
-                throttleOutput = cruiseModeThrottle (throttle, current_speed, dt);
-                break;
-            case mode::sport:
-                throttleOutput = throttle;
-                break;
-            default:
-                break;
+            // Converts input signal to output throttle according to the mode
+            switch (rideMode)
+                {
+                case mode::lock:
+                    throttleOutput = THR_MIN;
+                    break;
+                case mode::hybrid:
+                    throttleOutput = hybridModeThrottle (throttle, current_speed);
+                    break;
+                case mode::eco:
+                    throttleOutput = ecoModeThrottle (throttle, current_speed, dt);
+                    break;
+                case mode::cruise:
+                    throttleOutput = cruiseModeThrottle (throttle, current_speed, dt);
+                    break;
+                case mode::sport:
+                    throttleOutput = throttle;
+                    break;
+                default:
+                    break;
+                }
             }
         motor.writeMicroseconds (throttleOutput);
         }
     // And failsafe
     else
         failSafe ();
+
+
+        
     }
 int MotorController::getThrottleOutput ()
     {

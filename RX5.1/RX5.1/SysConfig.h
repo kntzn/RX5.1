@@ -1,5 +1,4 @@
 #pragma once
-#include "Config.h"
 
 // FW cfg:
 #define VESC_DEADBAND 0.15
@@ -18,7 +17,16 @@
 // HW cfg:
 #define WHEEL_DIA 0.083
 #define BAT_WH 222.0
+#define BAT_ABS_MIN_CELL 3.0
 
+// Lights cfg
+enum class lights_mode
+    {
+    _off,
+    _rear,
+    _all,
+    _auto
+    };
 
 // Modes cfg:
 enum class mode
@@ -61,3 +69,5 @@ enum class mode
 
 #define CRUISE_SPEED_CUTOFF_START  2.0
 #define CRUISE_SPEED_CUTOFF_END   -0.0
+
+

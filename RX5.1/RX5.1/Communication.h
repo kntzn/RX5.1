@@ -10,6 +10,7 @@
 #endif
 
 #include "Sarray.h"
+#include "Pinout.h"
 
 #define PACK_SIZE_MAX 64
 #define PACK_SIZE_DEFAULT 10

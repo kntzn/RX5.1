@@ -9,8 +9,10 @@
 	#include "WProgram.h"
 #endif
 
-#include "SysConfig.h"
+
 #include <Servo.h>
+#include "SysConfig.h"
+#include "Config.h"
 
 // TODO: fix speed limit & ramp up
 

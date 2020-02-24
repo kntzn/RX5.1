@@ -38,6 +38,8 @@ class BMS
         double getWhDrawn ();
         double getWhLeft ();
 
+        void readBatteryInfo (uint8_t* buffer);
+
     };
 
 #endif

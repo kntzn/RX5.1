@@ -123,3 +123,12 @@ double BMS::getWhLeft ()
     {
     return BAT_WH - whDrawn;
     }
+
+void BMS::readBatteryInfo (uint8_t * buffer)
+    {
+    buffer [0] = static_cast <uint8_t> (percents);
+    buffer [1] = static_cast <uint8_t> ((bat_voltage*N_CELLS) * 10.0);
+    buffer [2] = static_cast <uint8_t> ((bat_voltage - BAT_ABS_MIN_CELL) * 100.0);
+    buffer [3] = static_cast <uint8_t> (whDrawn);
+    buffer [4] = static_cast <uint8_t> (BAT_WH - whDrawn);
+    }

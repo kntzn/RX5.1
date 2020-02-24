@@ -4,7 +4,6 @@
 
 #include "Lights.h"
 #include "Config.h"
-#include "SysConfig.h"
 #include "Pinout.h"
 #include "kstd.h"
 
@@ -103,7 +102,7 @@ Lights::Lights (uint8_t front_lights_pin,
                 uint8_t rear_lights_pin,
                 uint8_t under_lights_pin,
                 uint8_t photores_pin,
-                mode lights_mode,
+                lights_mode lights_mode,
                 bool under_ligths):
     fl_pin (front_lights_pin), rl_pin (rear_lights_pin),
     ul_pin (under_lights_pin), pr_pin (photores_pin),
@@ -127,18 +126,18 @@ void Lights::update (int throttle)
     // Changes light type according to the mode
     switch (lightsMode)
         {
-        case Lights::mode::_off:
+        case lights_mode::_off:
             fl_lt = rl_lt = light_type::off; 
             break;
-        case Lights::mode::_rear:
+        case lights_mode::_rear:
             fl_lt = light_type::off;
             rl_lt = light_type::half;
             break;
-        case Lights::mode::_all:
+        case lights_mode::_all:
             fl_lt = light_type::full;
             rl_lt = light_type::half;
             break;
-        case Lights::mode::_auto:
+        case lights_mode::_auto:
             automaticLightType ();
             break;
         default:
@@ -154,12 +153,12 @@ void Lights::setValues (uint8_t * data_buffer)
     // if packet updated successfully
     if (data_buffer)
         {
-        lightsMode = static_cast <Lights::mode> (data_buffer [0]);
-        ul =         static_cast <bool>         (data_buffer [1]);
+        lightsMode = static_cast <lights_mode> (data_buffer [0]);
+        ul =         static_cast <bool>        (data_buffer [1]);
         }
     }
 
-void Lights::setMode (mode new_mode)
+void Lights::setMode (lights_mode new_mode)
     {
     lightsMode = new_mode;
     }

@@ -31,8 +31,10 @@ size_t Communication::receivePacket (uint8_t * pack)
     {
     // Reads the serial
     while (Serial.available ())
+        {
         inputBuf.push_back (Serial.read ());
-
+        }
+    
     // Searches for the EOP symb.
     int eop = -1;
     for (int i = 0; i < inputBuf.size (); i++)
@@ -76,11 +78,9 @@ Communication::Communication (uint8_t set_pin, uint8_t channel):
     setPin (set_pin),
     channelId (channel)
     {
-    Serial.begin (HC12_BAUD);
-
-    pinMode (set_pin, OUTPUT);
-    changeCh (channel);
-    digitalWrite (set_pin, HIGH);
+    //pinMode (set_pin, OUTPUT);
+    //changeCh (channel);
+    //digitalWrite (set_pin, LOW);
     }
 
 void Communication::changeCh (uint8_t ch)
@@ -89,6 +89,7 @@ void Communication::changeCh (uint8_t ch)
     digitalWrite (setPin, LOW);
     delay (AT_MODE_ON_DELAY);
 
+    /*
     String cmdStr = "AT+C";
     uint8_t channel = ch%N_CHANNELS;
 
@@ -105,6 +106,7 @@ void Communication::changeCh (uint8_t ch)
         cmdStr += String (channel);
         Serial.println (cmdStr.c_str ());
         }
+        */
 
     // turns AT mode off
     digitalWrite (setPin, HIGH);

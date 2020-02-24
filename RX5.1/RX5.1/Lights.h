@@ -9,16 +9,10 @@
 	#include "WProgram.h"
 #endif
 
+#include "SysConfig.h"
+
 class Lights
     {
-    public:
-        enum class mode
-            {
-            _off,
-            _rear,
-            _all,
-            _auto
-            };
     private:
         enum class light_type
             {
@@ -39,7 +33,7 @@ class Lights
         bool ul;
 
         light_type fl_lt, rl_lt;
-        mode lightsMode;
+        lights_mode lightsMode;
         env_brightness brightness;
 
         uint8_t fl_pin, rl_pin, ul_pin, pr_pin;
@@ -53,7 +47,7 @@ class Lights
                 uint8_t rear_lights_pin,
                 uint8_t under_lights_pin,
                 uint8_t photores_pin,
-                mode lights_mode,
+                lights_mode lights_mode,
                 bool under_ligths = false);
          
         void update (int throttle);
@@ -62,7 +56,7 @@ class Lights
         void setValues (uint8_t* data_buffer);
 
         // Manual setters
-        void setMode (mode new_mode);
+        void setMode (lights_mode new_mode);
         void setUnderLights (bool on);
         
     };
