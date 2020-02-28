@@ -25,6 +25,11 @@
 #include "Communication.h"
 
 
+// TOFIX: 
+// Mode switcher 
+// dc's m -> km
+// Mode restrictions
+
 void initialize();
 
 int main()

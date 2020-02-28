@@ -78,6 +78,9 @@ Communication::Communication (uint8_t set_pin, uint8_t channel):
     setPin (set_pin),
     channelId (channel)
     {
+    Serial.begin (HC12_BAUD);
+    while (!Serial);
+
     //pinMode (set_pin, OUTPUT);
     //changeCh (channel);
     //digitalWrite (set_pin, LOW);
@@ -148,6 +151,10 @@ Communication::response Communication::receiveResponse ()
     return response::noresp;
     }
 
+void Communication::flush ()
+    {
+    inputBuf.clear ();
+    }
 
 
 

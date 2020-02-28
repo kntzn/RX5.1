@@ -39,21 +39,28 @@ void DriveController::update (uint8_t* data_buffer, BMS battery)
     // Speed and accel
     speed        = hallSens.getSpeed ();
     acceleration = hallSens.getAccel ();
-
+    
     // Distance
-    double dS = hallSens.getNewTurnsAmount () * (WHEEL_DIA*PI);
+    double dS = hallSens.getNewTurnsAmount () * (WHEEL_DIA*PI) / 1000.0;
     odo += dS;
     trip += dS;
     totalTrip += dS;
     
     // battery consumption as Wh/km scince startup
-    consumption = trip?
-                  (batteryLeft - battery.getWhLeft ()) / (trip) : 
+    consumption = (trip && (batteryLeft - battery.getWhLeft () > -0.1))?
+                  //(batteryLeft - battery.getWhLeft ()) / (trip) : 
+                  10.0 / trip:
                   0.0;
+        
+    if (consumption > 25.5) // Limits consumption to 1 byte
+        consumption = 25.5;
+
     left = consumption?
            battery.getWhLeft () / consumption:
            0.0;
 
+    if (left > 6000) // Limits approx to 2 bytes
+        left = 6000;
     }
 
 int DriveController::getPPMoutput ()
@@ -83,11 +90,11 @@ void DriveController::readTripInfo (uint8_t * buffer)
     {
     buffer [0] = static_cast <uint8_t> (speed);                     // Speed
     buffer [1] = static_cast <uint8_t> (acceleration*10.0 + 127.0); // Accel 
-    buffer [2] = static_cast <uint8_t> (odo/256);                   // Odo hb
-    buffer [3] = static_cast <uint8_t> (odo) % 256;                 // Odo lb
-    buffer [4] = static_cast <uint8_t> (totalTrip/256);             // Odo hb
-    buffer [5] = static_cast <uint8_t> (totalTrip) % 256;           // Odo lb
-    buffer [6] = static_cast <uint8_t> (left /256);                 // Odo hb
-    buffer [7] = static_cast <uint8_t> (left) % 256;                // Odo lb
-    buffer [8] = static_cast <uint8_t> (consumption/10.0);          // Consumption
+    buffer [2] = static_cast <uint8_t> ((odo/1000.0)/256);          // Odo hb
+    buffer [3] = static_cast <uint8_t> ((odo/1000.0)) % 256;        // Odo lb
+    buffer [4] = static_cast <uint8_t> ((totalTrip*10.0)/256);             // Trp hb
+    buffer [5] = static_cast <uint8_t> ((totalTrip*10.0)) % 256;           // Trp lb
+    buffer [6] = static_cast <uint8_t> ((left*10.0) /256);                 // Lft hb
+    buffer [7] = static_cast <uint8_t> ((left*10.0)) % 256;                // Lft lb
+    buffer [8] = static_cast <uint8_t> (consumption*10.0);          // Consumption
     }

@@ -70,7 +70,7 @@ class Communication
         response receiveResponse();
 
         //void activateRawinput();
-        //void flush();
+        void flush();
 
         //bool rawinputActive();
         // Returns ptr to the args. array
